@@ -1,0 +1,65 @@
+import pygame, sys
+from pygame.locals import *
+
+pygame.init()
+clock = pygame.time.Clock()
+
+white = (255,255,255)
+black = (0,0,0)
+
+x,y=0,0
+moveY=0
+moveX=0
+
+window = pygame.display.set_mode((640,480))
+pygame.display.set_caption("Final")
+mousefile = "bg.jpg"
+mouse = pygame.image.load(mousefile).convert_alpha()
+
+gameLoop = True
+
+while gameLoop:
+
+    for event in pygame.event.get():
+
+        if(event.type==pygame.QUIT):
+            gameLoop=False
+
+        if(event.type==pygame.KEYDOWN):
+            if(event.key==pygame.K_LEFT):
+                moveX= -5
+            if(event.key==pygame.K_RIGHT):
+                moveX= 5
+            if(event.key==pygame.K_UP):
+                moveY= -5
+            if(event.key==pygame.K_DOWN):
+                moveY= 5
+
+        if(event.type==pygame.KEYUP):
+            if(event.key==pygame.K_LEFT):
+                moveX= 0
+            if(event.key==pygame.K_RIGHT):
+                moveX= 0
+            if(event.key==pygame.K_UP):
+                moveY= 0
+            if(event.key==pygame.K_DOWN):
+                moveY= 0
+
+    window.fill(black)
+
+    x+=moveX
+    y+moveY
+
+    pygame.draw.rect(window, white, (x,y,50,50))
+
+    x,y = pygame.mouse.get_pos()
+
+    x-= mouse.get_width()/2
+    y-= mouse.get_height()/2
+
+    window.blit(mouse, (x,y))
+
+    pygame.display.update()
+    clock.tick(30)
+
+
